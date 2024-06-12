@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+    <title>Build</title>
+</head>
+<body>
+<nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/build">Build</a></li>
+        <li><a href="/deploy">Deploy</a></li>
+        <li><a href="/release">Release</a></li>
+    </ul>
+</nav>
+<h1>Build Page</h1>
+<form id="build-form">
+    <h2>Application-level parameters</h2>
+
+    <label for="git_url">Git URL:</label>
+    <input type="text" id="git_url" name="git_url" value="ssh://git@stash.delta.sbrf.ru:7999/CRTM/hello-world-java-gradle.git" hx-post="/update_build?field=git_url" hx-trigger="change" hx-target="#build-result"><br>
+
+    <label for="git_branch">Git Branch:</label>
+    <input type="text" id="git_branch" name="git_branch" value="develop" hx-post="/update_build?field=git_branch" hx-trigger="change" hx-target="#build-result"><br>
+
+    <div id="sonar_project_key_container">
+        <label for="sonar_project_key">Sonar Project Key:</label>
+        <input type="text" id="sonar_project_key" name="sonar_project_key" value="hello-world-java-gradle" hx-post="/update_build?field=sonar_project_key" hx-trigger="change" hx-target="#build-result"><br>
+    </div>
+
+    <label for="build_profile">Build Profile:</label>
+    <input type="text" id="build_profile" name="build_profile" value="openshift_java11_gradle_6.9" hx-post="/update_build?field=build_profile" hx-trigger="change" hx-target="#build-result"><br>
+
+    <label for="build_subdir">Build Subdir:</label>
+    <input type="text" id="build_subdir" name="build_subdir" value="" hx-post="/update_build?field=build_subdir" hx-trigger="change" hx-target="#build-result"><br>
+
+    <h2>Build Steps</h2>
+    <label>
+        <input type="checkbox" id="run_sonarqube" name="steps" value="run_sonarqube" hx-post="/update_build?field=steps&step=run_sonarqube" hx-trigger="change" hx-target="#build-result"> Run SonarQube
+    </label><br>
+    <label>
+        <input type="checkbox" name="steps" value="run_sast" hx-post="/update_build?field=steps&step=run_sast" hx-trigger="change" hx-target="#build-result"> Run SAST
+    </label><br>
+    <label>
+        <input type="checkbox" name="steps" value="run_oss" hx-post="/update_build?field=steps&step=run_oss" hx-trigger="change" hx-target="#build-result"> Run OSS
+    </label><br>
+    <label>
+        <input type="checkbox" name="steps" value="publish_to_nexus" hx-post="/update_build?field=steps&step=publish_to_nexus" hx-trigger="change" hx-target="#build-result"> Publish to Nexus
+    </label><br>
+    <label>
+        <input type="checkbox" name="steps" value="build_docker_image" hx-post="/update_build?field=steps&step=build_docker_image" hx-trigger="change" hx-target="#build-result"> Build Docker Image
+    </label><br>
+    <label>
+        <input type="checkbox" name="steps" value="run_clair" hx-post="/update_build?field=steps&step=run_clair" hx-trigger="change" hx-target="#build-result"> Run Clair
+    </label><br>
+    <label>
+        <input type="checkbox" name="steps" value="check_qg_status" hx-post="/update_build?field=steps&step=check_qg_status" hx-trigger="change" hx-target="#build-result"> Check QG Status
+    </label><br>
+
+    <label for="nexus_artifact_format">Nexus Artifact Format:</label>
+    <input type="text" id="nexus_artifact_format" name="nexus_artifact_format" value="jar" hx-post="/update_build?field=nexus_artifact_format" hx-trigger="change" hx-target="#build-result"><br>
+</form>
+
+<div id="build-result"></div>
+</body>
+</html>
