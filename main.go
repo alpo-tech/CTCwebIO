@@ -31,9 +31,10 @@ func main() {
 
 	// Маршруты для вкладок
 	router.GET("/build", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "build.html", gin.H{
-			"ShowSonarProjectKey": false,
-		})
+		//c.HTML(http.StatusOK, "build.html", gin.H{
+		//	"ShowSonarProjectKey": false,
+		//})
+		c.HTML(http.StatusOK, "build.html", nil)
 	})
 	router.GET("/deploy", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "deploy.html", nil)
@@ -49,7 +50,7 @@ func main() {
 			field := c.Query("field")
 			step := c.Query("step")
 			var stepStatus string
-			showSonarProjectKey := false
+			//showSonarProjectKey := false
 
 			if step != "" {
 				// Если есть шаг, определим его статус (включен или выключен)
@@ -57,26 +58,26 @@ func main() {
 				for _, s := range form.Steps {
 					if s == step {
 						stepStatus = "enabled"
-						if s == "run_sonarqube" {
-							showSonarProjectKey = true
-						}
+						//if s == "run_sonarqube" {
+						//	showSonarProjectKey = true
+						//}
 						break
 					}
 				}
 			}
 
 			c.HTML(http.StatusOK, "build_result.html", gin.H{
-				"field":                  field,
-				"step":                   step,
-				"step_status":            stepStatus,
-				"show_sonar_project_key": showSonarProjectKey,
-				"git_url":                form.GitURL,
-				"git_branch":             form.GitBranch,
-				"sonar_project_key":      form.SonarProjectKey,
-				"build_profile":          form.BuildProfile,
-				"build_subdir":           form.BuildSubdir,
-				"steps":                  form.Steps,
-				"nexus_artifact_format":  form.NexusArtifactFormat,
+				"field":       field,
+				"step":        step,
+				"step_status": stepStatus,
+				//"show_sonar_project_key": showSonarProjectKey,
+				"git_url":               form.GitURL,
+				"git_branch":            form.GitBranch,
+				"sonar_project_key":     form.SonarProjectKey,
+				"build_profile":         form.BuildProfile,
+				"build_subdir":          form.BuildSubdir,
+				"steps":                 form.Steps,
+				"nexus_artifact_format": form.NexusArtifactFormat,
 			})
 		} else {
 			c.HTML(http.StatusBadRequest, "build_result.html", gin.H{"error": err.Error()})

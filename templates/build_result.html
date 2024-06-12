@@ -18,9 +18,9 @@
     {{ end }}
     <p><strong>Git URL:</strong> {{ .git_url }}</p>
     <p><strong>Git Branch:</strong> {{ .git_branch }}</p>
-    {{ if .show_sonar_project_key }}
+<!--    {{ if .show_sonar_project_key }}-->
     <p><strong>Sonar Project Key:</strong> {{ .sonar_project_key }}</p>
-    {{ end }}
+<!--    {{ end }}-->
     <p><strong>Build Profile:</strong> {{ .build_profile }}</p>
     <p><strong>Build Subdir:</strong> {{ .build_subdir }}</p>
     <p><strong>Build Steps:</strong> {{ range .steps }}<br>{{ . }}{{ end }}</p>

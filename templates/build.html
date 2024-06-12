@@ -26,10 +26,10 @@
     <label for="git_branch">Git Branch:</label>
     <input type="text" id="git_branch" name="git_branch" value="develop" hx-post="/update_build?field=git_branch" hx-trigger="change" hx-target="#build-result"><br>
 
-    <div id="sonar_project_key_container">
+<!--    <div id="sonar_project_key_container">-->
         <label for="sonar_project_key">Sonar Project Key:</label>
         <input type="text" id="sonar_project_key" name="sonar_project_key" value="hello-world-java-gradle" hx-post="/update_build?field=sonar_project_key" hx-trigger="change" hx-target="#build-result"><br>
-    </div>
+<!--    </div>-->
 
     <label for="build_profile">Build Profile:</label>
     <input type="text" id="build_profile" name="build_profile" value="openshift_java11_gradle_6.9" hx-post="/update_build?field=build_profile" hx-trigger="change" hx-target="#build-result"><br>
