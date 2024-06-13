@@ -18,14 +18,14 @@
     {{ end }}
     <p><strong>Git URL:</strong> {{ .git_url }}</p>
     <p><strong>Git Branch:</strong> {{ .git_branch }}</p>
-<!--    {{ if .show_sonar_project_key }}-->
     <p><strong>Sonar Project Key:</strong> {{ .sonar_project_key }}</p>
-<!--    {{ end }}-->
     <p><strong>Build Profile:</strong> {{ .build_profile }}</p>
     <p><strong>Build Subdir:</strong> {{ .build_subdir }}</p>
     <p><strong>Build Steps:</strong> {{ range .steps }}<br>{{ . }}{{ end }}</p>
     <p><strong>Nexus Artifact Format:</strong> {{ .nexus_artifact_format }}</p>
+    <button hx-post="/submit_build" hx-include="#build-form" hx-target="#submit-result">Submit</button>
     {{ end }}
 </div>
+<div id="submit-result"></div>
 </body>
 </html>

@@ -84,6 +84,20 @@ func main() {
 		}
 	})
 
+	// Новый обработчик для отправки данных формы
+	router.POST("/submit_build", func(c *gin.Context) {
+		var form BuildForm
+		if err := c.ShouldBind(&form); err == nil {
+			// Логика обработки данных формы после нажатия на кнопку
+			c.JSON(http.StatusOK, gin.H{
+				"status": "success",
+				"data":   form,
+			})
+		} else {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		}
+	})
+
 	// Запуск сервера на порту 8080
 	router.Run(":8080")
 }
