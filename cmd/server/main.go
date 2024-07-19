@@ -1,8 +1,10 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
+	"CRCwebIO/internal/app"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type BuildForm struct {
@@ -16,6 +18,10 @@ type BuildForm struct {
 }
 
 func main() {
+
+	application := app.NewApp()
+	application.Run(":8088")
+
 	router := gin.Default()
 
 	// Статические файлы (CSS, JS и т.д.)
