@@ -19,10 +19,10 @@ func main() {
 	router := gin.Default()
 
 	// Статические файлы (CSS, JS и т.д.)
-	router.Static("/static", "./web/static")
+	router.Static("/static", "./static")
 
 	// Подключение шаблонов
-	router.LoadHTMLGlob("./web/templates/*")
+	router.LoadHTMLGlob("templates/*")
 
 	// Маршрут для главной страницы
 	router.GET("/", func(c *gin.Context) {

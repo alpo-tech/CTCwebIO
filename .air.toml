@@ -1,0 +1,19 @@
+# Config file for Air
+
+# Working directory
+root = "."
+tmp_dir = "tmp"
+
+[build]
+  # Build with `-o tmp/main` and then run it with `tmp/main`
+  bin = "tmp/main"
+  cmd = "go build -o tmp/main ./cmd"
+  full_bin = "go run main.go"
+
+[watch]
+  # Watch these directories for changes
+  dirs = ["."]
+  # Ignore these directories
+  exclude_dir = ["tmp", "vendor"]
+  # File extensions to watch
+  extensions = ["go", "tpl", "tmpl", "html"]
