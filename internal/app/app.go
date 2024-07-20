@@ -3,9 +3,21 @@
 package app
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
+
+
+type BuildForm struct {
+	GitURL              string   `form:"git_url"`
+	GitBranch           string   `form:"git_branch"`
+	SonarProjectKey     string   `form:"sonar_project_key"`
+	BuildProfile        string   `form:"build_profile"`
+	BuildSubdir         string   `form:"build_subdir"`
+	Steps               []string `form:"steps"`
+	NexusArtifactFormat string   `form:"nexus_artifact_format"`
+}
 
 type App struct {
 	Router *gin.Engine
@@ -38,11 +50,52 @@ func handlerDeploy(context *gin.Context) {
 }
 
 func handlerUpdateBuild(contex *gin.Context) {
+	var form BuildForm
+	if err := contex.ShouldBind(&form); err == nil {
+		field := contex.Query("field")
+		step := contex.Query("step")
+		var stepStatus string
 
+		if step != "" {
+			// Если шаг, определим его статус(включен или выключен)
+			stepStatus = "disabled"
+			for _, s := range form.Steps {
+				if s == step {
+					stepStatus = "enabled"
+					break
+				}
+			}
+		}
+
+		contex.HTML(http.StatusOK, "build_result.html", gin.H{
+			"field":					field,
+			"step":						step,
+			"step_status":				stepStatus,
+			"git_url":					form.GitURL,
+			"git_branch":				form.GitBranch,
+			"sonar_project_key":		form.SonarProjectKey,
+			"build_profile":			form.BuildProfile,
+			"build_subdir":				form.BuildSubdir,
+			"steps":					form.Steps,
+			"nexus_artifact_format":	form.NexusArtifactFormat,
+		})
+	} else {
+		contex.HTML(http.StatusBadRequest, "build_result.html", gin.H{"error":err.Error()})
+	}
 }
 
 func handlerSubmitBuild(context *gin.Context) {
-
+	var form BuildForm
+	if err := context.ShouldBind(&form); err == nil {
+		context.JSON(http.StatusOK,	gin.H{
+			"status":	"success",
+			"data":		form,
+		})
+	} else {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+	}
 }
 
 func (a *App) InitializeRoutes() {
