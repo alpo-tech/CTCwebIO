@@ -3,9 +3,8 @@
 package app
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 type App struct {
@@ -46,9 +45,9 @@ func handlerSubmitBuild(context *gin.Context) {
 
 }
 
-func (a *App) initializeRoutes() {
-	a.Router.Static("/static", "../../web/static")
-	a.Router.LoadHTMLGlob("../../web/templates/*")
+func (a *App) InitializeRoutes() {
+	a.Router.Static("/static", "./web/static")
+	a.Router.LoadHTMLGlob("./web/templates/*")
 
 	a.Router.GET("", handlerBase)
 	a.Router.GET("/build", handlerBuild)

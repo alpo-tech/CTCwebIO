@@ -17,6 +17,7 @@ type BuildForm struct {
 func main() {
 
 	application := app.NewApp()
+	application.InitializeRoutes()
 	application.Run(":8088")
 
 	//router := gin.Default()
